@@ -8,6 +8,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
@@ -39,14 +40,23 @@ import com.isenap5.boothrum.domain.model.CustomDrawerState
 import com.isenap5.boothrum.domain.model.NavigationItem
 import com.isenap5.boothrum.domain.model.isOpened
 import com.isenap5.boothrum.domain.model.opposite
+import com.isenap5.boothrum.domain.search.SearchBarState
+import com.isenap5.boothrum.domain.search.opposite
 import com.isenap5.boothrum.presentation.component.CustomDrawer
 import com.isenap5.boothrum.util.coloredShadow
+import com.isenap5.boothrum.presentation.component.FloatingSearchButton
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import kotlin.math.roundToInt
 
 @Composable
 fun MainScreen() {
     var drawerState by rememberSaveable() { mutableStateOf(CustomDrawerState.Closed) }
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
+
+    var searchBarState by rememberSaveable() { mutableStateOf(SearchBarState.Closed) }
 
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
@@ -94,6 +104,9 @@ fun MainScreen() {
                 ),
             drawerState = drawerState,
             onDrawerClick = { drawerState = it },
+            selectedNavigationItem,
+            searchBarState = searchBarState,
+            onSearchClick = { searchBarState = it }
         )
     }
 }
@@ -104,7 +117,10 @@ fun MainScreen() {
 fun MainContent(
     modifier: Modifier = Modifier,
     drawerState: CustomDrawerState,
-    onDrawerClick: (CustomDrawerState) -> Unit
+    onDrawerClick: (CustomDrawerState) -> Unit,
+    selectedNavigationItem: NavigationItem,
+    searchBarState: SearchBarState,
+    onSearchClick: (SearchBarState) -> Unit
 ) {
     Scaffold(
         modifier = modifier
@@ -113,7 +129,7 @@ fun MainContent(
             },
         topBar = {
             TopAppBar(
-                title = { Text(text = "Boothrum") },
+                title = { Text(text = selectedNavigationItem.title) },
                 navigationIcon = {
                     IconButton(onClick = { onDrawerClick(drawerState.opposite()) }) {
                         Icon(
@@ -125,15 +141,25 @@ fun MainContent(
             )
         }
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        Column (
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(fraction = 0.6f).padding(horizontal = 16.dp)
+                .padding(horizontal = 12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Home",
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                fontWeight = FontWeight.Medium
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = selectedNavigationItem.title,
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            FloatingSearchButton(onActionClick = { onSearchClick(searchBarState.opposite()) })
         }
     }
 }
