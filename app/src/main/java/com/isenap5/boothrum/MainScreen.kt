@@ -7,8 +7,8 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
@@ -46,10 +46,11 @@ import com.isenap5.boothrum.presentation.component.CustomDrawer
 import com.isenap5.boothrum.util.coloredShadow
 import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import kotlin.math.roundToInt
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun MainScreen() {
@@ -57,6 +58,17 @@ fun MainScreen() {
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
 
     var searchBarState by rememberSaveable() { mutableStateOf(SearchBarState.Closed) }
+
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "home", builder = {
+        composable("home") { HomeScreen() }
+        composable("boards") { BoardsScreen()}
+        composable("favourite") { FavouriteScreen() }
+        composable("settings") { SettingsScreen()}
+        composable("about") { AboutScreen() }
+    })
+
+
 
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
@@ -141,24 +153,24 @@ fun MainContent(
             )
         }
     ) {
-        Column (
-            Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(fraction = 0.6f).padding(horizontal = 16.dp)
-                .padding(horizontal = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = selectedNavigationItem.title,
-                    fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = selectedNavigationItem.title,
+                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                fontWeight = FontWeight.Medium
+            )
+        }
+        Column(modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.End,
+
+        )
+        {
             FloatingSearchButton(onActionClick = { onSearchClick(searchBarState.opposite()) })
         }
     }
