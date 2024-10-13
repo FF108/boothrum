@@ -51,6 +51,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import kotlin.math.roundToInt
 import androidx.navigation.compose.rememberNavController
+import com.isenap5.boothrum.domain.Routes
 
 @Composable
 fun MainScreen() {
@@ -60,15 +61,13 @@ fun MainScreen() {
     var searchBarState by rememberSaveable() { mutableStateOf(SearchBarState.Closed) }
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home", builder = {
-        composable("home") { HomeScreen() }
-        composable("boards") { BoardsScreen()}
-        composable("favourite") { FavouriteScreen() }
-        composable("settings") { SettingsScreen()}
-        composable("about") { AboutScreen() }
+    NavHost(navController = navController, startDestination = Routes.HOME, builder = {
+        composable(Routes.HOME) { HomeScreen() }
+        composable(Routes.BOARDS) { BoardsScreen()}
+        composable(Routes.FAVOURITE) { FavouriteScreen() }
+        composable(Routes.SETTINGS) { SettingsScreen()}
+        composable(Routes.ABOUT) { AboutScreen() }
     })
-
-
 
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
@@ -102,6 +101,7 @@ fun MainScreen() {
             selectedNavigationItem = selectedNavigationItem,
             onNavigationItemClick = {
                 selectedNavigationItem = it
+                navController.navigate(it.route)
             },
             onCloseClick = { drawerState = CustomDrawerState.Closed }
         )
@@ -153,16 +153,16 @@ fun MainContent(
             )
         }
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = selectedNavigationItem.title,
-                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-                fontWeight = FontWeight.Medium
-            )
-        }
+//        Box(
+//            modifier = Modifier.fillMaxSize(),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Text(
+//                text = selectedNavigationItem.title,
+//                fontSize = MaterialTheme.typography.titleMedium.fontSize,
+//                fontWeight = FontWeight.Medium
+//            )
+//        }
         Column(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize(),
