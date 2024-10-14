@@ -115,7 +115,7 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                     shadowRadius = 50.dp
                 )
                 .clickable(enabled = drawerState == CustomDrawerState.Opened) {
-                    CustomDrawerState.Closed
+                    drawerState = CustomDrawerState.Closed
                 }
             ,
             topBar = {
