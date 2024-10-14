@@ -123,7 +123,7 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                     title = { Text(text = selectedNavigationItem.title) },
                     navigationIcon = {
                         IconButton(
-                            onClick = { drawerState.opposite() }) {
+                            onClick = { drawerState = drawerState.opposite() }) {
                             Icon(
                                 imageVector = Icons.Default.Menu,
                                 contentDescription = "Menu Icon"
