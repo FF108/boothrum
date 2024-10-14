@@ -46,6 +46,8 @@ import com.isenap5.boothrum.presentation.component.CustomDrawer
 import com.isenap5.boothrum.util.coloredShadow
 import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -153,16 +155,7 @@ fun MainContent(
             )
         }
     ) {
-//        Box(
-//            modifier = Modifier.fillMaxSize(),
-//            contentAlignment = Alignment.Center
-//        ) {
-//            Text(
-//                text = selectedNavigationItem.title,
-//                fontSize = MaterialTheme.typography.titleMedium.fontSize,
-//                fontWeight = FontWeight.Medium
-//            )
-//        }
+        HomeScreen()
         Column(modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize(),
