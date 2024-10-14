@@ -47,6 +47,7 @@ import com.isenap5.boothrum.util.coloredShadow
 import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.navigation.compose.NavHost
@@ -54,22 +55,19 @@ import androidx.navigation.compose.composable
 import kotlin.math.roundToInt
 import androidx.navigation.compose.rememberNavController
 import com.isenap5.boothrum.domain.Routes
+import com.isenap5.boothrum.presentation.component.ImageBoardViewModel
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModel: ImageBoardViewModel) {
+
     var drawerState by rememberSaveable() { mutableStateOf(CustomDrawerState.Closed) }
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
 
     var searchBarState by rememberSaveable() { mutableStateOf(SearchBarState.Closed) }
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.HOME, builder = {
-        composable(Routes.HOME) { HomeScreen() }
-        composable(Routes.BOARDS) { BoardsScreen()}
-        composable(Routes.FAVOURITE) { FavouriteScreen() }
-        composable(Routes.SETTINGS) { SettingsScreen()}
-        composable(Routes.ABOUT) { AboutScreen() }
-    })
 
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
@@ -107,7 +105,7 @@ fun MainScreen() {
             },
             onCloseClick = { drawerState = CustomDrawerState.Closed }
         )
-        MainContent(
+        Scaffold(
             modifier = Modifier
                 .offset(x = animatedOffset)
                 .scale(scale = animatedScale)
@@ -115,56 +113,33 @@ fun MainScreen() {
                     color = Color.Black,
                     alpha = 0.1f,
                     shadowRadius = 50.dp
-                ),
-            drawerState = drawerState,
-            onDrawerClick = { drawerState = it },
-            selectedNavigationItem,
-            searchBarState = searchBarState,
-            onSearchClick = { searchBarState = it }
-        )
-    }
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainContent(
-    modifier: Modifier = Modifier,
-    drawerState: CustomDrawerState,
-    onDrawerClick: (CustomDrawerState) -> Unit,
-    selectedNavigationItem: NavigationItem,
-    searchBarState: SearchBarState,
-    onSearchClick: (SearchBarState) -> Unit
-) {
-    Scaffold(
-        modifier = modifier
-            .clickable(enabled = drawerState == CustomDrawerState.Opened) {
-                onDrawerClick(CustomDrawerState.Closed)
-            },
-        topBar = {
-            TopAppBar(
-                title = { Text(text = selectedNavigationItem.title) },
-                navigationIcon = {
-                    IconButton(onClick = { onDrawerClick(drawerState.opposite()) }) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu Icon"
-                        )
-                    }
+                )
+                .clickable(enabled = drawerState == CustomDrawerState.Opened) {
+                    CustomDrawerState.Closed
                 }
-            )
-        }
-    ) {
-        HomeScreen()
-        Column(modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End,
-
-        )
-        {
-            FloatingSearchButton(onActionClick = { onSearchClick(searchBarState.opposite()) })
+            ,
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = selectedNavigationItem.title) },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { drawerState.opposite() }) {
+                            Icon(
+                                imageVector = Icons.Default.Menu,
+                                contentDescription = "Menu Icon"
+                            )
+                        }
+                    }
+                )
+            }
+        ) {
+            NavHost(navController = navController, startDestination = Routes.HOME, builder = {
+                composable(Routes.HOME) { HomeScreen(viewModel, searchBarState, {searchBarState = it}) }
+                composable(Routes.BOARDS) { BoardsScreen()}
+                composable(Routes.FAVOURITE) { FavouriteScreen() }
+                composable(Routes.SETTINGS) { SettingsScreen()}
+                composable(Routes.ABOUT) { AboutScreen() }
+            })
         }
     }
 }
