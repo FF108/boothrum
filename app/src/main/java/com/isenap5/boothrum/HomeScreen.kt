@@ -85,7 +85,7 @@ fun BoardPhotoCard(photo: ImageBoard, modifier: Modifier = Modifier) {
         modifier = Modifier
             .padding(vertical = 8.dp)
             .size(150.dp)
-            .clip(RoundedCornerShape(10)),
+            .clip(shape = RoundedCornerShape(8.dp)),
         error = painterResource(R.mipmap.ic_broken_image),
         placeholder = painterResource(R.mipmap.ic_loading_img),
         )

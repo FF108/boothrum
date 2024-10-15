@@ -102,6 +102,7 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
             onNavigationItemClick = {
                 selectedNavigationItem = it
                 navController.navigate(it.route)
+                drawerState = CustomDrawerState.Closed
             },
             onCloseClick = { drawerState = CustomDrawerState.Closed }
         )
@@ -131,15 +132,27 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                         }
                     }
                 )
+            },
+            content = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.TopStart,
+                ) {
+                    NavHost(navController = navController, startDestination = Routes.HOME, builder = {
+                        composable(Routes.HOME) {
+                            HomeScreen(
+                                viewModel,
+                                searchBarState,
+                                { searchBarState = it })
+                        }
+                        composable(Routes.BOARDS) { BoardsScreen() }
+                        composable(Routes.FAVOURITE) { FavouriteScreen() }
+                        composable(Routes.SETTINGS) { SettingsScreen() }
+                        composable(Routes.ABOUT) { AboutScreen() }
+                    })
+                }
             }
-        ) {
-            NavHost(navController = navController, startDestination = Routes.HOME, builder = {
-                composable(Routes.HOME) { HomeScreen(viewModel, searchBarState, {searchBarState = it}) }
-                composable(Routes.BOARDS) { BoardsScreen()}
-                composable(Routes.FAVOURITE) { FavouriteScreen() }
-                composable(Routes.SETTINGS) { SettingsScreen()}
-                composable(Routes.ABOUT) { AboutScreen() }
-            })
-        }
+        )
     }
 }
