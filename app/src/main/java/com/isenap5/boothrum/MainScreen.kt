@@ -134,12 +134,7 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                 )
             },
             content = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.TopStart,
-                ) {
-                    NavHost(navController = navController, startDestination = Routes.HOME, builder = {
+                    NavHost(navController = navController, startDestination = Routes.ABOUT, builder = {
                         composable(Routes.HOME) {
                             HomeScreen(
                                 viewModel,
@@ -151,7 +146,6 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                         composable(Routes.SETTINGS) { SettingsScreen() }
                         composable(Routes.ABOUT) { AboutScreen() }
                     })
-                }
             }
         )
     }
