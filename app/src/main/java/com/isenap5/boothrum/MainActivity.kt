@@ -17,6 +17,7 @@ import com.isenap5.boothrum.ui.theme.BoothrumTheme
 
 class MainActivity : ComponentActivity() {
     private val viewModel: ImageBoardViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

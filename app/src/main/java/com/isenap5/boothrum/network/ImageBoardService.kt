@@ -1,8 +1,8 @@
-package com.isenap5.boothrum.domain.model
+package com.isenap5.boothrum.network
 
 import retrofit2.http.GET
 
 interface ImageBoardService {
-    @GET("credit_cards")
+    @GET("posts.json")
     suspend fun getImageBoards(): List<ImageBoard>
 }

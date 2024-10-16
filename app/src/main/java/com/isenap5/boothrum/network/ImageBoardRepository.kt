@@ -1,4 +1,4 @@
-package com.isenap5.boothrum.domain.model
+package com.isenap5.boothrum.network
 
 class ImageBoardRepository {
     private val imageBoardService = RetrofitInstance.imageBoardService

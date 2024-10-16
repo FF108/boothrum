@@ -1,9 +1,6 @@
 
 package com.isenap5.boothrum
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -12,13 +9,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.isenap5.boothrum.domain.model.ImageBoard
-import android.graphics.Color
+import com.isenap5.boothrum.network.ImageBoard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,8 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.isenap5.boothrum.domain.search.SearchBarState
-import com.isenap5.boothrum.domain.search.opposite
+import com.isenap5.boothrum.domain.model.SearchBarState
+import com.isenap5.boothrum.domain.model.opposite
 import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 import com.isenap5.boothrum.presentation.component.ImageBoardViewModel
 

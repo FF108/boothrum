@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.isenap5.boothrum.domain.model.ImageBoard
-import com.isenap5.boothrum.domain.model.ImageBoardRepository
+import com.isenap5.boothrum.network.ImageBoard
+import com.isenap5.boothrum.network.ImageBoardRepository
 import kotlinx.coroutines.launch
 
 class ImageBoardViewModel : ViewModel() {
