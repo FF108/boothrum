@@ -4,5 +4,5 @@ import retrofit2.http.GET
 
 interface ImageBoardService {
     @GET("posts.json")
-    suspend fun getImageBoards(): List<ImageBoard>
+    suspend fun getPosts(): List<ImageBoard>
 }

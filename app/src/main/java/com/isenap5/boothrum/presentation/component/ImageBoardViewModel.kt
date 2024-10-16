@@ -1,24 +1,25 @@
 package com.isenap5.boothrum.presentation.component
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isenap5.boothrum.network.ImageBoard
-import com.isenap5.boothrum.network.ImageBoardRepository
+import com.isenap5.boothrum.network.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class ImageBoardViewModel : ViewModel() {
-    private val repository = ImageBoardRepository()
-    private val _imageBoards = MutableLiveData<List<ImageBoard>>()
-    val imageBoards: LiveData<List<ImageBoard>> = _imageBoards
-    fun fetchImageBoards() {
+    private val apiService = RetrofitInstance.api
+    val posts: MutableState<List<ImageBoard>> = mutableStateOf(emptyList())
+    fun getPosts() {
         viewModelScope.launch {
             try {
-                val cards = repository.getImageBoards()
-                _imageBoards.value = cards
+                val response = apiService.getPosts()
+                if (response.isNotEmpty()) {
+                    posts.value = response
+                }
             } catch (e: Exception) {
-                // Handle error
+                // Handle errors here
             }
         }
     }

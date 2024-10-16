@@ -4,22 +4,19 @@ package com.isenap5.boothrum
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.isenap5.boothrum.network.ImageBoard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
@@ -33,10 +30,7 @@ import com.isenap5.boothrum.presentation.component.ImageBoardViewModel
 fun HomeScreen(viewModel: ImageBoardViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit,) {
 
     Text("Home screen set")
-    val imageBoards by viewModel.imageBoards.observeAsState(emptyList())
-    LaunchedEffect(Unit) {
-        viewModel.fetchImageBoards()
-    }
+    val imageBoards by viewModel.posts.collectAsState()
     Column {
         if (imageBoards.isEmpty()) {
             // Show loading indicator or placeholder
@@ -65,10 +59,14 @@ fun HomeScreen(viewModel: ImageBoardViewModel, searchBarState: SearchBarState, o
         }
 
     }
+    DisposableEffect(Unit) {
+        viewModel.getPosts()
+        onDispose {}
+    }
 }
 
 @Composable
-fun BoardPhotoCard(photo: ImageBoard, modifier: Modifier = Modifier) {
+fun BoardPhotoCard(photo: Int, modifier: Modifier = Modifier) {
     AsyncImage(
         model = ImageRequest.Builder(context = LocalContext.current)
             .data(photo.url)
