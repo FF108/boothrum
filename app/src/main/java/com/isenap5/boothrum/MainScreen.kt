@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.isenap5.boothrum.domain.model.CustomDrawerState
 import com.isenap5.boothrum.domain.model.NavigationItem
 import com.isenap5.boothrum.domain.model.isOpened
@@ -51,6 +52,8 @@ import com.isenap5.boothrum.presentation.component.ImageBoardViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: ImageBoardViewModel) {
+
+    val imageBoardViewModel: ImageBoardViewModel = viewModel()
 
     var drawerState by rememberSaveable() { mutableStateOf(CustomDrawerState.Closed) }
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
@@ -127,7 +130,7 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                     NavHost(navController = navController, startDestination = Routes.ABOUT, builder = {
                         composable(Routes.HOME) {
                             HomeScreen(
-                                viewModel,
+                                imageBoardUiState = imageBoardViewModel.imageBoardUiState,
                                 searchBarState,
                                 { searchBarState = it })
                         }

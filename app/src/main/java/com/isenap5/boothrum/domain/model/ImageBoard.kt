@@ -1,4 +1,4 @@
-package com.isenap5.boothrum.network
+package com.isenap5.boothrum.domain.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName

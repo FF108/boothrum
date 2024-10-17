@@ -40,17 +40,24 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material:material:1.7.3")
-    implementation ("androidx.navigation:navigation-compose:2.8.2")
+    implementation("androidx.compose.material:material:1.7.4")
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
+    implementation ("androidx.navigation:navigation-compose:2.8.3")
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
-    implementation ("io.coil-kt:coil-compose:2.4.0")
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation ("io.coil-kt:coil-compose:2.7.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
-    implementation ("androidx.lifecycle:lifecycle-livedata:2.3.1")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.7.3")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.5")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation ("androidx.lifecycle:lifecycle-livedata:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.7.4")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 }
 
 dependencies {
