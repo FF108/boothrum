@@ -1,4 +1,4 @@
-package com.isenap5.boothrum.domain.model
+package com.isenap5.boothrum.data.model
 
 enum class CustomDrawerState {
     Opened,

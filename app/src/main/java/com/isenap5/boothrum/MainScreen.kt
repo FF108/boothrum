@@ -33,12 +33,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.isenap5.boothrum.domain.model.CustomDrawerState
-import com.isenap5.boothrum.domain.model.NavigationItem
-import com.isenap5.boothrum.domain.model.isOpened
-import com.isenap5.boothrum.domain.model.opposite
-import com.isenap5.boothrum.domain.model.SearchBarState
+import com.isenap5.boothrum.data.model.CustomDrawerState
+import com.isenap5.boothrum.data.model.NavigationItem
+import com.isenap5.boothrum.data.model.isOpened
+import com.isenap5.boothrum.data.model.opposite
+import com.isenap5.boothrum.data.model.SearchBarState
 import com.isenap5.boothrum.presentation.component.CustomDrawer
 import com.isenap5.boothrum.util.coloredShadow
 import androidx.navigation.compose.NavHost
@@ -46,14 +45,11 @@ import androidx.navigation.compose.composable
 import kotlin.math.roundToInt
 import androidx.navigation.compose.rememberNavController
 import com.isenap5.boothrum.domain.Routes
-import com.isenap5.boothrum.presentation.component.ImageBoardViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: ImageBoardViewModel) {
-
-    val imageBoardViewModel: ImageBoardViewModel = viewModel()
+fun MainScreen() {
 
     var drawerState by rememberSaveable() { mutableStateOf(CustomDrawerState.Closed) }
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
@@ -130,7 +126,6 @@ fun MainScreen(viewModel: ImageBoardViewModel) {
                     NavHost(navController = navController, startDestination = Routes.ABOUT, builder = {
                         composable(Routes.HOME) {
                             HomeScreen(
-                                imageBoardUiState = imageBoardViewModel.imageBoardUiState,
                                 searchBarState,
                                 { searchBarState = it })
                         }
