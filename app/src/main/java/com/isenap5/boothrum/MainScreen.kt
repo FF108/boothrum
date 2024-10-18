@@ -1,6 +1,5 @@
 package com.isenap5.boothrum
 
-import androidx.compose.runtime.Composable
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
@@ -21,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,23 +33,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.isenap5.boothrum.data.model.CustomDrawerState
-import com.isenap5.boothrum.data.model.NavigationItem
-import com.isenap5.boothrum.data.model.isOpened
-import com.isenap5.boothrum.data.model.opposite
-import com.isenap5.boothrum.data.model.SearchBarState
-import com.isenap5.boothrum.presentation.component.CustomDrawer
-import com.isenap5.boothrum.util.coloredShadow
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import kotlin.math.roundToInt
 import androidx.navigation.compose.rememberNavController
+import com.isenap5.boothrum.data.model.CustomDrawerState
+import com.isenap5.boothrum.data.model.NavigationItem
+import com.isenap5.boothrum.data.model.SearchBarState
+import com.isenap5.boothrum.data.model.isOpened
+import com.isenap5.boothrum.data.model.opposite
 import com.isenap5.boothrum.domain.Routes
+import com.isenap5.boothrum.presentation.component.BooruViewModel
+import com.isenap5.boothrum.presentation.component.CustomDrawer
+import com.isenap5.boothrum.util.coloredShadow
+import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModel: BooruViewModel) {
 
     var drawerState by rememberSaveable() { mutableStateOf(CustomDrawerState.Closed) }
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
@@ -123,9 +124,10 @@ fun MainScreen() {
                 )
             },
             content = {
-                    NavHost(navController = navController, startDestination = Routes.ABOUT, builder = {
+                    NavHost(navController = navController, startDestination = Routes.HOME, builder = {
                         composable(Routes.HOME) {
                             HomeScreen(
+                                viewModel,
                                 searchBarState,
                                 { searchBarState = it })
                         }
