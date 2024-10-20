@@ -1,6 +1,7 @@
 package com.isenap5.boothrum.presentation.component
 
 import BooruClient
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import kotlinx.coroutines.Dispatchers
@@ -17,4 +18,5 @@ class BooruViewModel : ViewModel() {
             emit(emptyList()) // En cas d'erreur, renvoyer une liste vide
         }
     }
+
 }
