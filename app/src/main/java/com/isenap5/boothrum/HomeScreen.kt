@@ -1,6 +1,7 @@
 
 package com.isenap5.boothrum
 
+import ImageBoard
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +38,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -58,9 +58,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.isenap5.boothrum.data.model.ImageBoxState
 import com.isenap5.boothrum.data.model.SearchBarState
-import com.isenap5.boothrum.data.model.opposite
 import com.isenap5.boothrum.presentation.component.BooruViewModel
-import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 
 
 @Composable
@@ -228,7 +226,7 @@ fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSe
                     if (showImageInfo && selectedPost != null) {
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight(0.35f)
+                                .fillMaxHeight(0.4f)
                                 .wrapContentSize()
                                 .background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f))
                                 .zIndex(2f)

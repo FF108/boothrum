@@ -138,7 +138,7 @@ fun MainScreen(viewModel: BooruViewModel) {
                             selectedBoard = boardUrl
                         } }
                         composable(Routes.FAVOURITE) { FavouriteScreen() }
-                        composable(Routes.SETTINGS) { SettingsScreen() }
+                        composable(Routes.SETTINGS) { SettingsScreen(selectedBoard) }
                         composable(Routes.ABOUT) { AboutScreen() }
                     })
             }

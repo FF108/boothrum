@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -17,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.isenap5.boothrum.R
@@ -50,8 +53,11 @@ fun CustomDrawer(
         }
         Spacer(modifier = Modifier.height(24.dp))
         Image(
-            modifier = Modifier.size(100.dp),
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            modifier = Modifier
+                .size(100.dp)
+                .clip(CircleShape),
+                contentScale = ContentScale.Crop,
+            painter = painterResource(id = R.mipmap.ic_logo),
             contentDescription = "Boothrum Image"
         )
         Spacer(modifier = Modifier.height(40.dp))
