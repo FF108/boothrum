@@ -1,4 +1,4 @@
-package com.isenap5.boothrum.domain.search
+package com.isenap5.boothrum.data.model
 
 enum class SearchBarState {
     Opened,

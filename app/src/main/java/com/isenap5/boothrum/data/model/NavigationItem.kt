@@ -1,4 +1,4 @@
-package com.isenap5.boothrum.domain.model
+package com.isenap5.boothrum.data.model
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
@@ -6,7 +6,6 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.isenap5.boothrum.R
 import com.isenap5.boothrum.domain.Routes
 
 
