@@ -1,6 +1,7 @@
 package com.isenap5.boothrum.presentation.component
 
 import BooruClient
+import ImageBoard
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -17,7 +18,7 @@ class BooruViewModel : ViewModel() {
                 val response = booruClient.getPosts()
                 emit(response ?: emptyList())
             } catch (e: IOException) {
-                emit(emptyList()) // En cas d'erreur, renvoyer une liste vide
+                emit(emptyList())
             }
         } as MutableLiveData<List<ImageBoard>>
     }

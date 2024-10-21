@@ -57,16 +57,15 @@ import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.isenap5.boothrum.data.model.ImageBoxState
-import com.isenap5.boothrum.data.model.SearchBarState
 import com.isenap5.boothrum.presentation.component.BooruViewModel
 
 
 @Composable
-fun HomeScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit, boardUrl: String) {
+fun HomeScreen(viewModel: BooruViewModel, boardUrl: String) {
 
     viewModel.fetchPosts(boardUrl) // Déclencher une nouvelle requête de données
 
-    ResultScreen(viewModel, searchBarState, onSearchClick)
+    ResultScreen(viewModel)
 }
 
 @Composable
@@ -78,9 +77,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     )
 }
 
-/**
- * The home screen displaying error message with re-attempt button.
- */
+
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier) {
     Column(
@@ -95,12 +92,10 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
     }
 }
 
-/**
- * ResultScreen displaying number of photos retrieved.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit) {
+fun ResultScreen(viewModel: BooruViewModel) {
 
     var posts = viewModel.posts.observeAsState(initial = emptyList())
     var previewState by rememberSaveable() { mutableStateOf(ImageBoxState.Closed) }
