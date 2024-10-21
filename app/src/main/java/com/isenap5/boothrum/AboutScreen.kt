@@ -32,7 +32,7 @@ fun AboutScreen() {
             modifier = Modifier
                 .size(150.dp)
                 .clip(CircleShape),
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = R.mipmap.ic_logo),
             contentDescription = "Boothrum Image",
         )
 
@@ -59,7 +59,7 @@ fun AboutScreen() {
             text = "Licence open-source",
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
-                .padding(top = 10.dp),
+                .padding(top = 25.dp),
             textAlign = Left
         )
     }

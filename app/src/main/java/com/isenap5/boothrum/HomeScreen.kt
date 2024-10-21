@@ -1,6 +1,7 @@
 
 package com.isenap5.boothrum
 
+import ImageBoard
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +38,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -57,17 +57,15 @@ import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.isenap5.boothrum.data.model.ImageBoxState
-import com.isenap5.boothrum.data.model.SearchBarState
-import com.isenap5.boothrum.data.model.opposite
 import com.isenap5.boothrum.presentation.component.BooruViewModel
-import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 
 
 @Composable
-fun HomeScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit) {
-    var loadedBoard by rememberSaveable { mutableStateOf("General") }
+fun HomeScreen(viewModel: BooruViewModel, boardUrl: String) {
 
-    ResultScreen(viewModel, searchBarState, onSearchClick)
+    viewModel.fetchPosts(boardUrl) // Déclencher une nouvelle requête de données
+
+    ResultScreen(viewModel)
 }
 
 @Composable
@@ -79,9 +77,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     )
 }
 
-/**
- * The home screen displaying error message with re-attempt button.
- */
+
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier) {
     Column(
@@ -96,12 +92,10 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
     }
 }
 
-/**
- * ResultScreen displaying number of photos retrieved.
- */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit) {
+fun ResultScreen(viewModel: BooruViewModel) {
 
     var posts = viewModel.posts.observeAsState(initial = emptyList())
     var previewState by rememberSaveable() { mutableStateOf(ImageBoxState.Closed) }
@@ -227,7 +221,7 @@ fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSe
                     if (showImageInfo && selectedPost != null) {
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight(0.35f)
+                                .fillMaxHeight(0.4f)
                                 .wrapContentSize()
                                 .background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f))
                                 .zIndex(2f)

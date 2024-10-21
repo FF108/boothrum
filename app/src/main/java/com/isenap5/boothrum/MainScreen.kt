@@ -38,7 +38,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.isenap5.boothrum.data.model.CustomDrawerState
 import com.isenap5.boothrum.data.model.NavigationItem
-import com.isenap5.boothrum.data.model.SearchBarState
 import com.isenap5.boothrum.data.model.isOpened
 import com.isenap5.boothrum.data.model.opposite
 import com.isenap5.boothrum.domain.Routes
@@ -55,9 +54,7 @@ fun MainScreen(viewModel: BooruViewModel) {
     var drawerState by rememberSaveable() { mutableStateOf(CustomDrawerState.Closed) }
     var selectedNavigationItem by rememberSaveable() { mutableStateOf(NavigationItem.Home) }
 
-    var searchBarState by rememberSaveable() { mutableStateOf(SearchBarState.Closed) }
-
-    var selectedBoard by rememberSaveable { mutableStateOf("General") }
+    var selectedBoard by rememberSaveable { mutableStateOf("https://safebooru.donmai.us/") }
 
     val navController = rememberNavController()
 
@@ -130,12 +127,13 @@ fun MainScreen(viewModel: BooruViewModel) {
                         composable(Routes.HOME) {
                             HomeScreen(
                                 viewModel,
-                                searchBarState,
-                                { searchBarState = it })
+                                boardUrl = selectedBoard)
                         }
-                        composable(Routes.BOARDS) { BoardsScreen(viewModel, selectedBoard) }
+                        composable(Routes.BOARDS) { BoardsScreen() { boardUrl ->
+                            selectedBoard = boardUrl
+                        } }
                         composable(Routes.FAVOURITE) { FavouriteScreen() }
-                        composable(Routes.SETTINGS) { SettingsScreen() }
+                        composable(Routes.SETTINGS) { SettingsScreen(selectedBoard) }
                         composable(Routes.ABOUT) { AboutScreen() }
                     })
             }

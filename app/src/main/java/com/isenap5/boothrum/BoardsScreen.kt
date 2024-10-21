@@ -15,10 +15,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.isenap5.boothrum.presentation.component.BooruViewModel
 
 @Composable
-fun BoardsScreen(viewModel: BooruViewModel, onBoardSelected: String) {
+fun BoardsScreen(onBoardSelected: (String) -> Unit) {
     val boards = listOf("https://danbooru.donmai.us/", "https://safebooru.donmai.us/", "https://sonohara.donmai.us/", "https://donmai.moe/")
     var selectedBoard by rememberSaveable { mutableStateOf("https://safebooru.donmai.us/") }
 
@@ -33,6 +32,7 @@ fun BoardsScreen(viewModel: BooruViewModel, onBoardSelected: String) {
                     .padding(8.dp)
                     .clickable {
                         selectedBoard = board
+                        onBoardSelected(board)
                     }
                     .background(
                         if (selectedBoard == board) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
