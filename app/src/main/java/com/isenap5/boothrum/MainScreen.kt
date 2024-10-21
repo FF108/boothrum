@@ -131,9 +131,12 @@ fun MainScreen(viewModel: BooruViewModel) {
                             HomeScreen(
                                 viewModel,
                                 searchBarState,
-                                { searchBarState = it })
+                                { searchBarState = it },
+                                selectedBoard)
                         }
-                        composable(Routes.BOARDS) { BoardsScreen(viewModel, selectedBoard) }
+                        composable(Routes.BOARDS) { BoardsScreen(viewModel) { boardUrl ->
+                            selectedBoard = boardUrl
+                        } }
                         composable(Routes.FAVOURITE) { FavouriteScreen() }
                         composable(Routes.SETTINGS) { SettingsScreen() }
                         composable(Routes.ABOUT) { AboutScreen() }

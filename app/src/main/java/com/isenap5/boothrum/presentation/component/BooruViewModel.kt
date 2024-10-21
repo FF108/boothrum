@@ -9,14 +9,16 @@ import okio.IOException
 
 class BooruViewModel : ViewModel() {
     private val booruClient = BooruClient()
+    var posts = MutableLiveData<List<ImageBoard>>()
 
-    val posts = liveData(Dispatchers.IO) {
-        try {
-            val response = booruClient.getPosts()
-            emit(response ?: emptyList())
-        } catch (e: IOException) {
-            emit(emptyList()) // En cas d'erreur, renvoyer une liste vide
-        }
+    fun fetchPosts(boardUrl: String) {
+        posts = liveData(Dispatchers.IO) {
+            try {
+                val response = booruClient.getPosts()
+                emit(response ?: emptyList())
+            } catch (e: IOException) {
+                emit(emptyList()) // En cas d'erreur, renvoyer une liste vide
+            }
+        } as MutableLiveData<List<ImageBoard>>
     }
-
 }

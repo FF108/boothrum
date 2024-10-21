@@ -64,8 +64,9 @@ import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 
 
 @Composable
-fun HomeScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit) {
-    var loadedBoard by rememberSaveable { mutableStateOf("General") }
+fun HomeScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit, boardUrl: String) {
+
+    viewModel.fetchPosts(boardUrl) // Déclencher une nouvelle requête de données
 
     ResultScreen(viewModel, searchBarState, onSearchClick)
 }
