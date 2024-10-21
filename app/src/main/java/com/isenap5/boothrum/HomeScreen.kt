@@ -27,13 +27,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +64,9 @@ import com.isenap5.boothrum.presentation.component.FloatingSearchButton
 
 
 @Composable
-fun HomeScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit,) {
+fun HomeScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSearchClick: (SearchBarState) -> Unit) {
+    var loadedBoard by rememberSaveable { mutableStateOf("General") }
+
     ResultScreen(viewModel, searchBarState, onSearchClick)
 }
 
@@ -106,8 +112,10 @@ fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSe
     var searchText by rememberSaveable { mutableStateOf("") }
 
     val onCloseClick = {
-        previewState = ImageBoxState.Closed;
+        previewState = ImageBoxState.Closed
         selectedImageUrl = null
+        selectedPost = null
+        showImageInfo = false
     }
 
     val boxModifier = if (previewState == ImageBoxState.Opened) {
@@ -120,34 +128,11 @@ fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSe
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-//        Box(modifier = Modifier.fillMaxWidth()) {
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(top = 16.dp),
-//                ) {
-//                if (isSearchBarVisible) {
-//                    SearchBar(
-//                        query = searchText,
-//                        onQueryChange = { searchText = it },
-//                        onSearch = { /* Action de recherche */ },
-//                        active = isSearchBarVisible,
-//                        onActiveChange = { isSearchBarVisible = it }
-//                    )
-//                } else {
-//                    Text(
-//                        text = "Résultat de la recherche : $searchText",
-//                        style = MaterialTheme.typography.bodyLarge,
-//                        modifier = Modifier.padding(16.dp)
-//                    )
-//                }
-//            }
-//        }
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier
                 .padding(horizontal = 8.dp)
-                .padding(top = 80.dp, bottom = 12.dp)
+                .padding(top = 100.dp, bottom = 6.dp)
         ) {
             items(posts.value.size) { index ->
                 val post = posts.value[index]
@@ -180,6 +165,31 @@ fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSe
                             .padding(vertical = 8.dp, horizontal = 8.dp)
                             .aspectRatio(0.78f)
                             .clip(shape = RoundedCornerShape(15.dp))
+                    )
+                }
+            }
+        }
+
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight(0.12f)
+                    .wrapContentSize()
+                    .clipToBounds()
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                Spacer(modifier = Modifier.height(50.dp))
+                if (isSearchBarVisible) {
+                    SearchBar(
+                        searchText = searchText,
+                        onSearchTextChange = { searchText = it }
+                    )
+                } else if (searchText.isNotEmpty()) {
+                    Text(
+                        text = "Filters : $searchText",
+                        maxLines = 2,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(16.dp)
                     )
                 }
             }
@@ -300,6 +310,34 @@ fun ResultScreen(viewModel: BooruViewModel, searchBarState: SearchBarState, onSe
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.End,
     ) {
-        FloatingSearchButton(onActionClick = { onSearchClick(searchBarState.opposite()) })
+        FloatingActionButton(
+            onClick = {
+                isSearchBarVisible = !isSearchBarVisible // Toggle de la visibilité de la barre
+            },
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(16.dp),
+            content = {
+                if (isSearchBarVisible) {
+                    Icon(Icons.Default.Close, contentDescription = "Fermer la recherche")
+                } else {
+                    Icon(Icons.Default.Search, contentDescription = "Ouvrir la recherche")
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun SearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
+    Box(modifier = Modifier.fillMaxWidth()) {
+        TextField(
+            value = searchText,
+            onValueChange = onSearchTextChange,
+            placeholder = { Text("Recherche...") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
     }
 }

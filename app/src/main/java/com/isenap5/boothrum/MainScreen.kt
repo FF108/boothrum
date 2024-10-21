@@ -57,6 +57,8 @@ fun MainScreen(viewModel: BooruViewModel) {
 
     var searchBarState by rememberSaveable() { mutableStateOf(SearchBarState.Closed) }
 
+    var selectedBoard by rememberSaveable { mutableStateOf("General") }
+
     val navController = rememberNavController()
 
     val configuration = LocalConfiguration.current
@@ -131,7 +133,7 @@ fun MainScreen(viewModel: BooruViewModel) {
                                 searchBarState,
                                 { searchBarState = it })
                         }
-                        composable(Routes.BOARDS) { BoardsScreen() }
+                        composable(Routes.BOARDS) { BoardsScreen(viewModel, selectedBoard) }
                         composable(Routes.FAVOURITE) { FavouriteScreen() }
                         composable(Routes.SETTINGS) { SettingsScreen() }
                         composable(Routes.ABOUT) { AboutScreen() }

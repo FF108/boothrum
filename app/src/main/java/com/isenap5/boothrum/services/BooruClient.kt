@@ -85,11 +85,12 @@ data class Variants (
 
 class BooruClient {
     private val client = OkHttpClient()
-    var url = "https://safebooru.donmai.us/posts.json?limit=200"
+    var url = "https://safebooru.donmai.us"
+    var requestBooru = "$url/posts.json?limit=200"
 
     fun getPosts(): List<ImageBoard>? {
         val request = Request.Builder()
-            .url(url)
+            .url(requestBooru)
             .build()
 
         client.newCall(request).execute().use { response ->
