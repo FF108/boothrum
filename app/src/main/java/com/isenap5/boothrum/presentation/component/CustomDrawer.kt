@@ -31,7 +31,7 @@ fun CustomDrawer(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(fraction = 0.6f)
+            .fillMaxWidth(fraction = 0.6f).padding(horizontal = 16.dp)
             .padding(horizontal = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
