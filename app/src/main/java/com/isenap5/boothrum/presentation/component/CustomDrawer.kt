@@ -67,16 +67,8 @@ fun CustomDrawer(
         NavigationItem.entries.toTypedArray().takeLast(1).forEach { navigationItem ->
             NavigationItemView(
                 navigationItem = navigationItem,
-                selected = false,
-                onClick = {
-                    when (navigationItem) {
-                        NavigationItem.Settings -> {
-                            onNavigationItemClick(NavigationItem.Settings)
-                        }
-
-                        else -> {}
-                    }
-                }
+                selected = navigationItem == selectedNavigationItem,
+                onClick = { onNavigationItemClick(navigationItem) }
             )
         }
         Spacer(modifier = Modifier.height(24.dp))
